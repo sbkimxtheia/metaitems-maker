@@ -23,29 +23,76 @@
 </head>
 
 <body>
+<div class="container" id="parent" style="margin-top: 20px;">
+    <div class="container" id="titleDiv"
+         style="text-align: center; margin-bottom: 20px">
+        <h2>
+            <b>MetaItem Preset Tool</b>
+        </h2>
+        <small>
+            <a href="https://github.com/sbkimxtheia/metaitems-maker" target="_blank">GitHub</a>
+            /
+            <a href="https://github.com/sbkimxtheia/metaitems" target="_blank">MetaItems</a>
+        </small>
+    </div>
+    <div class="container" id="propsDiv">
+        <table class="table"> <!-- // Properties! // -->
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Key</th>
+                <th scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody id="properties">
+            <tr>
+                <th scope="row">0</th>
+                <td>Name
+                    <small>
 
-<div id="properties">
-    <div>
-        <label for="colFormLabel" class="col-sm-2 col-form-label">아이템 이름 (Name)</label>
-        <div class="col-sm-10">
-            <input class="form-control" id="colFormLabel" placeholder="codename">
+                    </small>
+                </td>
+                <td>itemCodeName</td>
+            </tr>
+            <tr>
+                <th scope="row">1</th>
+                <td>Material</td>
+                <td>GOLDEN_SWORD</td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <select class="form-select" aria-label="multiple select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <button type="button" class="button btn-secondary btn-block" onclick="btnNewProperty()">new Property...</button>
+            <br>
+
         </div>
+    </div>
+    <div class="container" id="outputDiv">
+        <label for="outTextArea">
+            <small>preview</small>
+        </label>
+        <div>
+            <textarea id="outTextArea" readonly style="width:100%; height: 500px; text-align: left">
+
+            </textarea>
+        </div>
+        <button type="button" class="button btn-primary" onclick="refresh()">
+            Refresh
+        </button>
+
     </div>
 </div>
 
 
-<div id="property">new Property</div>
-<div>
-    <select class="form-select" aria-label="multiple select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
-    <button type="button" class="button btn-secondary btn-block" onclick="btnNewProperty()">new Property...</button>
-</div>
-
 <script>
+
+    let properties = []
 
     function btnNewProperty()
     {
@@ -53,6 +100,30 @@
             '        <div class="col-sm-10">\n' +
             '            <input class="form-control" id="colFormLabel" placeholder="codename">\n' +
             '        </div>');
+    }
+
+    function refresh()
+    {
+        let outfield = document.getElementById('outTextArea')
+
+        outfield.innerText = ''
+        outfield.append('# Created with metaitems-maker\n' +
+            '# https://github.com/sbkimxtheia/metaitems-maker\n' +
+            '# https://github.com/sbkimxtheia/metaitems\n')
+
+        var props = getParent().rows;
+        for (var rowI = 0; rowI < props.length; rowI++) {
+
+            let prop = props[rowI];
+            let no = prop.cells.item(0).innerText;
+            let key = prop.cells.item(1).innerText;
+            let val = prop.cells.item(2).innerText;
+
+            let was = outfield.innerText;
+            console.log("" + no + key + val)
+            outfield.append('\n# ' + no + '\n' + key + ': ' + val + '\n')
+        }
+
     }
 
 
@@ -67,6 +138,21 @@
         div.innerHTML = innerElement;
         getParent()
             .appendChild(div);
+    }
+
+    function getLang()
+    {
+        return navigator.language
+    }
+
+    const locales = {
+        KO: {
+            title: "이름"
+        },
+        EN: {
+            title: "MetaItems Preset Tool"
+        }
+
     }
 </script>
 
