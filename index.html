@@ -11,98 +11,158 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>MetaItem YML Generator</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+
+    <title>MetaItem YML Generator</title>
+
     <style>
         * {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Noto Sans', sans-serif;
+            color: white;
+            background-color: #1a1e21;
         }
     </style>
+
 </head>
 
-<body>
+<body style="background-color: #1a1e21">
 <div class="container" id="parent" style="margin-top: 20px;">
-    <div class="container" id="titleDiv"
-         style="text-align: center; margin-bottom: 20px">
-        <h2>
-            <b>MetaItem Preset Tool</b>
-        </h2>
+
+    <!-- Top Header -->
+    <div class="container" id="topDiv">
         <small>
-            <a href="https://github.com/sbkimxtheia/metaitems-maker" target="_blank">GitHub</a>
-            /
-            <a href="https://github.com/sbkimxtheia/metaitems" target="_blank">MetaItems</a>
+            Locale:
+            <span id="localeDisplay">N/A</span>
         </small>
     </div>
+
+    <!-- Title -->
+    <div class="container" id="titleDiv"
+         style="text-align: center; margin-bottom: 20px">
+
+        <!-- Title -->
+        <div>
+            <h1>
+                <b data-lang="title">MetaItem Preset Tool</b>
+            </h1>
+        </div>
+
+        <!-- Links -->
+        <div style="margin-top: 15px; margin-bottom: 40px">
+            <small>
+                <a href="https://github.com/sbkimxtheia/metaitems-maker">
+                    <img src="https://img.shields.io/badge/MetaItems maker-181717?style=flat-square&logo=GitHub&logoColor=white"
+                         alt="GitHub Page"/>
+                </a>/<a href="https://github.com/sbkimxtheia/metaitems">
+                <img src="https://img.shields.io/badge/MetaItems-181717?style=flat-square&logo=GitHub&logoColor=white"
+                     alt="GitHub Page"/>
+            </a>
+            </small>
+        </div>
+
+    </div>
+
+    <!-- Properties Table -->
     <div class="container" id="propsDiv">
-        <table class="table"> <!-- // Properties! // -->
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Key</th>
-                <th scope="col">Value</th>
-            </tr>
-            </thead>
-            <tbody id="properties">
-            <tr>
-                <th scope="row">0</th>
-                <td>Name
-                    <small>
 
-                    </small>
-                </td>
-                <td>itemCodeName</td>
-            </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>Material</td>
-                <td>GOLDEN_SWORD</td>
-            </tr>
-            </tbody>
-        </table>
+        <!-- Table -->
         <div>
-            <select class="form-select" aria-label="multiple select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <button type="button" class="button btn-secondary btn-block" onclick="btnNewProperty()">new Property...</button>
-            <br>
+            <table class="table" style="color:white">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Key</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody id="properties">
+                <tr>
+                    <th scope="row">0</th>
+                    <td>Name</td>
+                    <td>itemCodeName</td>
+                </tr>
 
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div class="container" id="outputDiv">
-        <label for="outTextArea">
-            <small>preview</small>
-        </label>
+
+        <!-- Addition -->
         <div>
-            <textarea id="outTextArea" readonly style="width:100%; height: 500px; text-align: left">
 
-            </textarea>
+            <!-- Selection -->
+            <div>
+                <select class="form-select" aria-label="multiple select example">
+                    <option selected>Select Property</option>
+                    <option value="1">Material</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <!-- Input Form -->
+            <div>
+            </div>
+
+            <!-- Button -->
+            <div>
+                <button type="button" class="btn btn-secondary btn-block" onclick="btnNewProperty()">
+                    new Property...
+                </button>
+            </div>
         </div>
-        <button type="button" class="button btn-primary" onclick="refresh()">
-            Refresh
-        </button>
 
     </div>
+
+    <!-- Result Area -->
+    <div class="container" id="resultDiv">
+
+        <!-- Out Text -->
+        <div id="out">
+            <label for="outTextArea">
+                <small>preview (click below to copy)</small>
+            </label>
+            <textarea id="outTextArea" readonly
+                      style="background-color:#13171B ;color: #A9A9A9; cursor:pointer; width:100%; height: 500px; text-align: left"
+                      onclick="copy()"></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div id="buttons">
+            <button type="button" class="btn btn-primary" onclick="refreshOut()">
+                Refresh
+            </button>
+            <button type="button" class="btn btn-secondary">
+                Download .yml file
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="copy()">
+                Copy
+            </button>
+        </div>
+    </div>
+
 </div>
-
-
 <script>
 
-    let properties = []
+    //applyLocales("EN")
+    refreshOut()
 
     function btnNewProperty()
     {
-        add('<label for="colFormLabel" class="col-sm-2 col-form-label">아이템 이름 (Name)</label>\n' +
-            '        <div class="col-sm-10">\n' +
-            '            <input class="form-control" id="colFormLabel" placeholder="codename">\n' +
-            '        </div>');
+        let newProp = document.createElement('tr');
+        newProp.innerHTML =
+            '<th scope="row">1</th>' +
+            '<td>Material</td>' +
+            '<td>GOLDEN_SWORD</td>';
+
+        document.getElementById('properties')
+                .appendChild(newProp);
+
     }
 
-    function refresh()
+    function refreshOut()
     {
         let outfield = document.getElementById('outTextArea')
 
@@ -126,6 +186,14 @@
 
     }
 
+    function copy()
+    {
+        document.getElementById('outTextArea')
+                .select();
+
+        document.execCommand('copy')
+    }
+
 
     function getParent()
     {
@@ -142,7 +210,26 @@
 
     function getLang()
     {
-        return navigator.language
+        const lc = navigator.language;
+        let lcUpper = lc.toUpperCase();
+        if (lcUpper === 'KO' || lcUpper === 'KO_KR' || lcUpper === 'KO-KR' || lcUpper === 'KR') {
+            return "KO"
+        } else {
+            return "EN"
+        }
+    }
+
+    function applyLocales(localeStr)
+    {
+
+        document.getElementById('localeDisplay').innerText = getLang();
+
+
+        const $lang = document.querySelectorAll("[data-lang]")
+        $lang.forEach(el => {
+            const code = el.dataset.lang
+            el.textContent = locales[localeStr][code]
+        })
     }
 
     const locales = {
