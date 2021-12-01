@@ -158,7 +158,7 @@
     //endregion
 
     loadLocales()
-    //applyLocales("EN")
+    applyLocale(getLang())
     refreshOut()
 
     function btnNewProperty()
@@ -172,10 +172,12 @@
         document.getElementById('properties')
                 .appendChild(newProp);
 
+        refreshOut()
     }
 
-    function propertyForm(type){
-        switch (type.toUpperCase()){
+    function propertyForm(type)
+    {
+        switch (type.toUpperCase()) {
             case 'MATERIAL':
 
         }
@@ -227,15 +229,18 @@
             .appendChild(div);
     }
 
-    function loadLocales(){
+    function loadLocales()
+    {
+        let display = document.getElementById('localeDisplay');
+        display.innerHTML = "";
         for (let locale in locales) {
             let lcb = document.createElement('span');
             lcb.innerText = locale + " ";
-            lcb.setAttribute('style','cursor: pointer;')
+            lcb.setAttribute('style', 'cursor: pointer;')
             lcb.setAttribute('onclick', 'applyLocale("' + locale + '")');
             lcb.setAttribute('id', 'locale_' + locale)
             console.log(lcb)
-            document.getElementById('localeDisplay').appendChild(lcb);
+            display.appendChild(lcb);
         }
     }
 
@@ -253,11 +258,9 @@
     function applyLocale(localeStr)
     {
         console.log('Locale Applied: ' + localeStr)
-        for (let localesKey in locales) {
-            let selected = document.getElementById('locale_' + localesKey);
-            selected
-        }
-        selected.hidden
+        loadLocales();
+        let tar = document.getElementById("locale_" + localeStr)
+        console.log(tar.getAttributeNames());
 
 
         const $lang = document.querySelectorAll("[data-lang]")
