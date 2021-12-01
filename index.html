@@ -32,10 +32,10 @@
 <div class="container" id="parent" style="margin-top: 20px;">
 
     <!-- Top Header -->
-    <div class="container" id="topDiv">
+    <div class="container" id="topDiv" style="margin-bottom: 20px">
         <small>
-            Locale:
-            <span id="localeDisplay">N/A</span>
+            Locales:
+            <span id="localeDisplay"></span>
         </small>
     </div>
 
@@ -145,7 +145,19 @@
 
 </div>
 <script>
+    //region locales
+    const locales = {
+        KO: {
+            title: "이름"
+        },
+        EN: {
+            title: "MetaItems Preset Tool"
+        }
 
+    }
+    //endregion
+
+    loadLocales()
     //applyLocales("EN")
     refreshOut()
 
@@ -160,6 +172,13 @@
         document.getElementById('properties')
                 .appendChild(newProp);
 
+    }
+
+    function propertyForm(type){
+        switch (type.toUpperCase()){
+            case 'MATERIAL':
+
+        }
     }
 
     function refreshOut()
@@ -208,6 +227,18 @@
             .appendChild(div);
     }
 
+    function loadLocales(){
+        for (let locale in locales) {
+            let lcb = document.createElement('span');
+            lcb.innerText = locale + " ";
+            lcb.setAttribute('style','cursor: pointer;')
+            lcb.setAttribute('onclick', 'applyLocale("' + locale + '")');
+            lcb.setAttribute('id', 'locale_' + locale)
+            console.log(lcb)
+            document.getElementById('localeDisplay').appendChild(lcb);
+        }
+    }
+
     function getLang()
     {
         const lc = navigator.language;
@@ -219,10 +250,14 @@
         }
     }
 
-    function applyLocales(localeStr)
+    function applyLocale(localeStr)
     {
-
-        document.getElementById('localeDisplay').innerText = getLang();
+        console.log('Locale Applied: ' + localeStr)
+        for (let localesKey in locales) {
+            let selected = document.getElementById('locale_' + localesKey);
+            selected
+        }
+        selected.hidden
 
 
         const $lang = document.querySelectorAll("[data-lang]")
@@ -232,15 +267,7 @@
         })
     }
 
-    const locales = {
-        KO: {
-            title: "이름"
-        },
-        EN: {
-            title: "MetaItems Preset Tool"
-        }
 
-    }
 </script>
 
 <!-- Optional JavaScript -->
