@@ -22,13 +22,13 @@
         * {
             font-family: 'Noto Sans', sans-serif;
             color: white;
-            background-color: #1a1e21;
+            background-color: #0d1117;
         }
     </style>
 
 </head>
 
-<body style="background-color: #1a1e21">
+<body style="background-color: #0d1117">
 <div class="container" id="parent" style="margin-top: 20px;">
 
     <!-- Top Header -->
@@ -70,7 +70,7 @@
         <form>
 
             <!-- CodeName -->
-            <div class="form-row">
+            <div class="form-row" style="margin-bottom: 20px">
                 <div class="form-group col">
                     <label for="input_codename">
                         <span data-lang="prop_codename">
@@ -89,7 +89,7 @@
             </div>
 
             <!-- Material -->
-            <div class="form-row">
+            <div class="form-row" style="margin-bottom: 20px">
                 <div class="form-group col">
                     <label for="input_material">
                         <span data-lang="prop_material">
@@ -108,7 +108,7 @@
             </div>
 
             <!-- Display -->
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 30px">
                 <label for="input_display">
                     <span data-lang="prop_display">
                         Display
@@ -119,13 +119,13 @@
                     </small>
                 </label>
                 <input type="text" class="form-control" id="input_display" placeholder="§e[RARE] §fMagic Sword">
-                <small data-lang="syntax_display">
+                <small style="color: #8799AD; margin-top: 5px" data-lang="syntax_display">
                     Display Syntax.
                 </small>
             </div>
 
             <!-- Lore -->
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 30px">
                 <label for="input_lore">
                     <span data-lang="prop_lore">
                         Lore
@@ -139,39 +139,48 @@
                         "§7Legendary magic sword.
 §7Can be found in magic castle."
                 ></textarea>
-                <small data-lang="syntax_lore">
+                <small style="color: #8799AD; margin-top: 5px" data-lang="syntax_lore">
                     Lore Syntax.
                 </small>
             </div>
 
-
-            <!-- Misc -->
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
+            <!-- Durability -->
+            <div class="form-row" style="margin-bottom: 40px">
+                <div class="form-group col">
+                    <label for="input_durdamage">
+                    <span data-lang="prop_durdamage">
+                        Durability
+                    </span>
+                        <br>
+                        <small data-lang="desc_durdamage">
+                            Durability Damage
+                        </small>
+                    </label>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
+                <div class="form-group col-2">
+                    <input id="input_durdamage" type="number" value="0" class="form-control" style="margin-top: 7px;"
+                           onchange="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value})()">
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
-                </div>
+                <input type="range" id="slider_durdamage" class="form-range" min="0" max="255" step="1" value="0"
+                       oninput="durSlider()" onchange="durSlider()">
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Check me out
+
+            <!-- Unbreakable -->
+            <div class="form-row" style="margin-bottom: 30px">
+                <div class="form-group col">
+                    <label for="input_durdamage">
+                    <span data-lang="prop_durdamage">
+                        Durability
+                    </span>
+                        <br>
+                        <small data-lang="desc_durdamage">
+                            Durability Damage
+                        </small>
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+
+
         </form>
     </div>
 
@@ -270,11 +279,14 @@
             syntax_display: "색상 코드 '§'를 사용할 수 있습니다.    ex) §f = 흰색, §e = 밝은 노랑",
 
             prop_material: "메테리얼",
-            desc_material: "'다이아몬드 검', '철 곡괭이'와 같은 아이템 Material",
+            desc_material: "'다이아몬드 검', '철 곡괭이'와 같은 아이템",
 
             prop_lore: "로어",
             desc_lore: "플레이어에게 표시되는 아이템의 설명들입니다. 여러 줄을 작성할 수 있습니다.",
-            syntax_lore: "색상 코드 '§'를 사용할 수 있습니다.<br>한 줄당 하나의 로어가 추가됩니다. 엔터키를 사용해 구분하세요."
+            syntax_lore: "색상 코드 '§'를 사용할 수 있습니다. 한 줄당 하나의 로어가 추가됩니다. 엔터키를 사용해 구분하세요.",
+
+            prop_durdamage: "내구도 감소량",
+            desc_durdamage: "아이템의 내구도가 설정된 값만큼 소모된 채로 생성됩니다. 일반적인 정상범위는 0~255입니다.",
         },
         EN: {
             title: "MetaItems Preset Editor",
@@ -291,13 +303,16 @@
 
             prop_lore: "Lore",
             desc_lore: "Descriptions of item. Multiple lines supported.",
-            syntax_lore: "Can use color symbol '§'.<br>1 Line = 1 Lore, Use 'Enter' key to separate."
+            syntax_lore: "Can use color symbol '§'. 1 Line = 1 Lore, Use 'Enter' key to separate.",
+
+            prop_durdamage: "Durability Damage",
+            desc_durdamage: "Item's durability will be damaged with this value. Basically 0~255.",
         }
 
     }
     //endregion
 
-    const properties = ['codename','material','display','lore']
+    const properties = ['codename', 'material', 'display', 'lore']
 
     loadLocales()
     applyLocale(getLang())
@@ -317,14 +332,6 @@
         refreshOut()
     }
 
-    function propertyForm(type)
-    {
-        switch (type.toUpperCase()) {
-            case 'MATERIAL':
-
-        }
-    }
-
     function refreshOut()
     {
         let outfield = document.getElementById('outTextArea')
@@ -332,29 +339,38 @@
         outfield.innerText = ''
         outfield.append('# Created with metaitems-maker\n' +
             '# https://github.com/sbkimxtheia/metaitems-maker\n' +
-            '# https://github.com/sbkimxtheia/metaitems\n')
+            '# https://github.com/sbkimxtheia/metaitems\n\n' +
+            'CodeName: \'' + getInput('codename') + "\'\n" +
+            'Material: \'' + getInput('material') + "\'\n" +
+            'DisplayName: \'' + getInput('display') + "\'\n" +
+            'Lores:\n');
 
-
-        for (let property of properties) {
-            let prop = 
+        let loreIn = getInput('lore');
+        if (!/^ *$/.test(loreIn)) {
+            let lores = loreIn.split('\n')
+            if (lores != null && lores.length > 0) {
+                for (var i = 0; i < lores.length; i++) {
+                    outfield.append('  - \'' + lores[i] + "\'");
+                }
+            }
         }
 
 
+        // var props = getParent().rows;
+        // for (var rowI = 0; rowI < props.length; rowI++) {
+        //
+        //     let prop = props[rowI];
+        //     let no = prop.cells.item(0).innerText;
+        //     let key = prop.cells.item(1).innerText;
+        //     let val = prop.cells.item(2).innerText;
+        //
+        //     let was = outfield.innerText;
+        //     outfield.append('\n# ' + no + '\n' + key + ': ' + val + '\n')
+        // }
 
-
-
-
-        var props = getParent().rows;
-        for (var rowI = 0; rowI < props.length; rowI++) {
-
-            let prop = props[rowI];
-            let no = prop.cells.item(0).innerText;
-            let key = prop.cells.item(1).innerText;
-            let val = prop.cells.item(2).innerText;
-
-            let was = outfield.innerText;
-            console.log("" + no + key + val)
-            outfield.append('\n# ' + no + '\n' + key + ': ' + val + '\n')
+        function getInput(entry)
+        {
+            return document.getElementById('input_' + entry).value;
         }
 
     }
@@ -421,6 +437,12 @@
             const code = el.dataset.lang
             el.innerHTML = locales[localeStr][code]
         })
+    }
+
+
+    function durSlider()
+    {
+        document.getElementById('input_durdamage').value = document.getElementById('slider_durdamage').value
     }
 
 
