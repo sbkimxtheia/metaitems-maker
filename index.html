@@ -29,7 +29,7 @@
             font-size: 20px;
         }
 
-        .prop-desc {
+        small.prop-desc {
             color: #B3B3B3;
             margin-left: 8px;
         }
@@ -90,10 +90,26 @@
                     </small>
                 </label>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="input_codename" placeholder="magic_sword">
+                    <input type="text" class="form-control" id="input_codename" placeholder="magic_sword"
+                           oninput='(
+                               function (){
+                                   let blankSyntax = document.getElementById("syntax_codename");
+                                    if(document.getElementById("input_codename").value.includes(" ")){
+                                        console.log(true);
+                                        blankSyntax.setAttribute("style","color: #ED2E2A;");
+                                    }
+                                    else{
+                                        console.log(false);
+                                        blankSyntax.setAttribute("style","color: #6c757d;");
+                                    }
+                               })()'>
                     <div style="margin-top: 5px">
-                        <small class="text-muted" data-lang="syntax_codename">
-                            Display Syntax.
+                        <small id="syntax_codename" style="color: #6c757d" data-lang="syntax_codename_1">
+                            Codename Syntax 1.
+                        </small>
+                        <br>
+                        <small class="text-muted" data-lang="syntax_codename_2">
+                            Codename Syntax 2.
                         </small>
                     </div>
                 </div>
@@ -110,8 +126,7 @@
                         Material Description.
                     </small>
                 </label>
-                <select id="input_material" class="custom-select">
-                    <option selected>Open this select menu</option>
+                <select id="input_material" class="custom-select" onchange="refreshOut()">
                     <option value="ACACIA_BOAT">ACACIA_BOAT</option>
                     <option value="ACACIA_BUTTON">ACACIA_BUTTON</option>
                     <option value="ACACIA_DOOR">ACACIA_DOOR</option>
@@ -1271,7 +1286,7 @@
                     <div class="form-group col-2">
                         <input id="input_durdamage" type="number" value="0" class="form-control"
                                style="margin-top: 7px;"
-                               onchange="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value})()">
+                               oninput="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value})()">
                     </div>
                 </div>
 
@@ -1282,7 +1297,7 @@
             <div class="form-group" style="margin-bottom: 30px">
                 <label for="input_durdamage">
                     <span class="prop-name" data-lang="prop_unbreakable">Durability</span>
-                    <small class="prop-desc" data-lang="desc_unbreakable">Durability Damage </small>-
+                    <small class="prop-desc" data-lang="desc_unbreakable">Durability Damage </small>
                 </label>
             </div>
 
@@ -1384,7 +1399,8 @@
 
             prop_codename: "코드네임",
             desc_codename: "아이템 식별에 사용되는 문자열",
-            syntax_codename: "공백 없이 영문과 언더바(_)만 사용하여 작성하는 것을 권장합니다.<br>플레이어에게 표시되지 않고, 시스템이 아이템을 식별, 검색할 경우에만 사용합니다.",
+            syntax_codename_1: "공백 없이 영어 소문자와 언더바만 사용하여 작성하는 것을 권장합니다.",
+            syntax_codename_2: "플레이어에게 표시되지 않고, 시스템이 아이템을 식별, 검색할 경우에만 사용합니다.",
 
             prop_display: "이름",
             desc_display: "플레이어에게 표시되는 아이템의 이름",
@@ -1414,7 +1430,8 @@
 
             prop_codename: "CodeName",
             desc_codename: "String for identifying item (not for display)",
-            syntax_codename: "No blank is recommended.",
+            syntax_codename_1: "No blank is recommended.",
+            syntax_codename_2: "It won't be displayed to player. Only used by system for identifying item.",
 
 
             prop_display: "Display Name",
@@ -1439,7 +1456,7 @@
     }
     //endregion
 
-    const properties = ['codename', 'material', 'display', 'lore']
+    //const properties = ['codename', 'material', 'display', 'lore']
 
     loadLocales()
     applyLocale(getLang())
