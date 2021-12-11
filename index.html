@@ -95,6 +95,7 @@
                     <input type="text" class="form-control" id="input_codename" placeholder="magic_sword"
                            oninput='(
                                function (){
+                                   refreshOut();
                                    let blankSyntax = document.getElementById("syntax_codename");
                                     if(document.getElementById("input_codename").value.includes(" ")){
                                         console.log(true);
@@ -106,7 +107,7 @@
                                     }
                                })()'>
                     <div style="margin-top: 5px">
-                        <small id="syntax_codename" style="color: #6c757d" data-lang="syntax_codename_1" >
+                        <small id="syntax_codename" style="color: #6c757d" data-lang="syntax_codename_1">
                             Codename Syntax 1.
                         </small>
                         <br>
@@ -1226,7 +1227,7 @@
                     </small>
                 </label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="input_display" placeholder="§e[RARE] §fMagic Sword">
+                    <input type="text" class="form-control" id="input_display" oninput="refreshOut()" placeholder="§e[RARE] §fMagic Sword">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" data-lang="btn_addcolorsymbol"
                                 onclick="addColorSymbol('input_display')">
@@ -1252,7 +1253,7 @@
                         Lore Description.
                     </small>
                 </label>
-                <textarea class="form-control" id="input_lore" rows="4" placeholder=
+                <textarea class="form-control" id="input_lore" oninput="refreshOut()" rows="4" placeholder=
                         "§7Legendary magic sword.
 §7Can be found in magic castle."
                 ></textarea>
@@ -1264,8 +1265,39 @@
 
             </div>
 
+
+            <!-- Unbreakable -->
+            <div class="form-group" style="margin-bottom: 30px">
+                <label for="input_durdamage">
+                    <span class="prop-name" data-lang="prop_unbreakable">Durability</span>
+                    <small class="prop-desc" data-lang="desc_unbreakable">Durability Damage </small>
+                </label>
+                <div class="row-cols-1 btn-group-toggle" oninput="refreshOut()">
+                    <input type="radio" class="btn-check "
+                           name="radio_unbreakable" value="true" id="input_unbreakable"
+                           checked>
+                    <label class="btn btn-outline-primary" for="input_unbreakable" data-lang="optn_unbreakable_true">
+
+                        Unbreakable True
+
+                    </label>
+                    <br>
+                    <input type="radio" class="btn btn-block btn-check "
+                           name="radio_unbreakable" value="false" id="unbreakable_false">
+                    <label class="btn btn-outline-primary" for="unbreakable_false" data-lang="optn_unbreakable_false">Unbreakable
+                        False</label>
+                </div>
+                <div style="margin-top: 5px" id="synt_unbreakable">
+                    <small class="text-muted" data-lang="synt_unbreakable">
+                        Lore Syntax.
+                    </small>
+                </div>
+
+            </div>
+
+
             <!-- Durability -->
-            <div class="form-group" style="margin-bottom: 40px">
+            <div class="form-group" style="margin-bottom: 40px" id="durdamageDiv">
                 <label for="input_durdamage">
                         <span class="prop-name" data-lang="prop_durdamage">
                         Durability
@@ -1276,7 +1308,7 @@
                 </label>
                 <div class="form-row">
                     <div class="form-group input-group col-10" style="align-content: center">
-                        <input type="range" id="slider_durdamage" class="form-range" min="0" max="255" step="1"
+                        <input type="range" id="slider_durdamage" class="form-range" min="0" max="2031" step="1"
                                value="0"
                                oninput="durSlider()" onchange="durSlider()">
                         <label for="slider_durdamage">
@@ -1288,20 +1320,14 @@
                     <div class="form-group col-2">
                         <input id="input_durdamage" type="number" value="0" class="form-control"
                                style="margin-top: 7px;"
-                               oninput="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value})()">
+                               oninput="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value; refreshOut();})()">
                     </div>
                 </div>
 
 
             </div>
 
-            <!-- Unbreakable -->
-            <div class="form-group" style="margin-bottom: 30px">
-                <label for="input_durdamage">
-                    <span class="prop-name" data-lang="prop_unbreakable">Durability</span>
-                    <small class="prop-desc" data-lang="desc_unbreakable">Durability Damage </small>
-                </label>
-            </div>
+
 
 
         </form>
@@ -1390,6 +1416,8 @@
 </div>
 <script>
     //region locales
+    let localeStr = "EN";
+
     const locales = {
         KO: {
             locale_str: "KO",
@@ -1397,7 +1425,7 @@
 
             title: "MetaItem 프리셋 에디터",
             btn_addcolorsymbol: "색상 기호 \'§\' 추가",
-            slider_durdamage: "ex) 값을 0으로 설정하면, 아이템이 내구도가 꽉 찬 상태로 생성됩니다. 범위 밖의 값이 필요하다면, 직접 입력해 주세요.",
+
 
             prop_codename: "코드네임",
             desc_codename: "아이템 식별에 사용되는 문자열",
@@ -1416,11 +1444,18 @@
             desc_lore: "플레이어에게 표시되는 아이템의 설명들입니다. 여러 줄을 작성할 수 있습니다.",
             syntax_lore: "한 줄당 하나의 로어가 추가됩니다. 엔터키를 사용해 구분하세요.<br>색상 기호 '§'를 사용할 수 있습니다.",
 
-            prop_durdamage: "내구도 감소량",
-            desc_durdamage: "아이템의 내구도가 설정된 값만큼 소모된 채로 생성됩니다. 일반적인 범위는 0~255입니다.",
+            prop_durdamage: "초기 내구도 감소량",
+            desc_durdamage: "아이템의 내구도가 설정된 값만큼 소모된 채로 생성됩니다.",
+            slider_durdamage: "내구도가 유효하지 않은 메테리얼이면 이 값은 무시됩니다. <br>범위 밖의 값이 필요하다면, 직접 입력해 주세요.",
 
             prop_unbreakable: "부서지지 않음",
             desc_unbreakable: "아이템에 \"부서지지 않음\" 옵션을 추가합니다. 내구도가 소모되지 않게 됩니다.",
+            optn_unbreakable_true: "True :: 아이템이 내구도를 가지지 않습니다.",
+            optn_unbreakable_false: "False :: 아이템이 내구도를 가지며, 사용 시 소모됩니다.",
+            synt_unbreakable: "아이템이 부서지지 않음으로 설정된 경우, 초기 내구도 감소 옵션은 무시됩니다.",
+
+            outprefix_1: "이 프리셋 파일은 MetaItems-Maker에 의해 간편하게 생성되었습니다.",
+            outprefix_2: "이 프리셋 파일은 MetaItems 플러그인을 위한 아이템 프리셋입니다.",
         },
         EN: {
             locale_str: "EN",
@@ -1428,7 +1463,7 @@
 
             title: "MetaItems Preset Editor",
             btn_addcolorsymbol: "Append \'§\'",
-            slider_durdamage: "ex) Value 0 will make item to be created with 100% durability.",
+
 
             prop_codename: "CodeName",
             desc_codename: "String for identifying item (not for display)",
@@ -1448,11 +1483,18 @@
             desc_lore: "Descriptions of item. Multiple lines supported.",
             syntax_lore: "Can use color symbol \'§\'. 1 Line = 1 Lore, Use 'Enter' key to separate.",
 
-            prop_durdamage: "Durability Damage",
-            desc_durdamage: "Item's durability will be damaged with this value. Basically 0~255.",
+            prop_durdamage: "Initial Durability Damage",
+            desc_durdamage: "Whenever an item is created, durability reduced by this value.",
+            slider_durdamage: "If material doesn't have durability, this value will be ignored.<br>If you need 'Special' value, please type manually.",
 
             prop_unbreakable: "Unbreakable",
             desc_unbreakable: "Add \"Unbreakable\" attribute to item.",
+            optn_unbreakable_true: "True :: Item don't have durability system.",
+            optn_unbreakable_false: "False :: When using items, it consumes durability.",
+            synt_unbreakable: "If item is 'Unbreakable', Property 'Initial Durability Damage' will be ignored.",
+
+            outprefix_1: "This preset is made with MetaItems-Maker",
+            outprefix_2: "This preset is available in the MetaItems plugin",
         }
 
     }
@@ -1460,8 +1502,9 @@
 
     //const properties = ['codename', 'material', 'display', 'lore']
 
+    localeStr = getLang();
     loadLocales()
-    applyLocale(getLang())
+    applyLocale(localeStr)
     refreshOut()
 
     function btnNewProperty()
@@ -1481,24 +1524,51 @@
     function refreshOut()
     {
         let outfield = document.getElementById('outTextArea')
+        let unbreakable = document.querySelector('input[name="radio_unbreakable"]:checked').value === "true";
+        document.getElementById('durdamageDiv').hidden = unbreakable;
+        document.getElementById('synt_unbreakable').hidden = !unbreakable;
 
         outfield.innerText = ''
-        outfield.append('# Created with metaitems-maker\n' +
-            '# https://github.com/sbkimxtheia/metaitems-maker\n' +
-            '# https://github.com/sbkimxtheia/metaitems\n\n' +
+        outfield.append('# ' + locales[localeStr]['outprefix_1'] + '\n' +
+            '# GitHub: https://github.com/sbkimxtheia/metaitems-maker\n' +
+            '# ' + locales[localeStr]['outprefix_2'] + '\n' +
+            '# GitHub: https://github.com/sbkimxtheia/metaitems\n\n' +
             'CodeName: \'' + getInput('codename') + "\'\n" +
             'Material: \'' + getInput('material') + "\'\n" +
-            'DisplayName: \'' + getInput('display') + "\'\n" +
-            'Lores:\n');
+            'DisplayName: \'' + getInput('display') + "\'\n");
 
         let loreIn = getInput('lore');
-        if (!/^ *$/.test(loreIn)) {
-            let lores = loreIn.split('\n')
-            if (lores != null && lores.length > 0) {
-                for (var i = 0; i < lores.length; i++) {
-                    outfield.append('  - \'' + lores[i] + "\'\n");
+        if(loreIn != null){
+
+            if (!/^ *$/.test(loreIn)) {
+
+
+                let _lores_ = [];
+
+                let lores = loreIn.split('\n')
+                if (lores != null && lores.length > 0) {
+                    for (var i = 0; i < lores.length; i++) {
+                        let _lore_ = lores[i];
+                        if(_lore_){
+                            _lores_.push(_lore_);
+                        }
+                    }
+                }
+
+                if(_lores_.length > 0){
+                    outfield.append('Lores:\n');
+                    for (let lore of _lores_) {
+                        outfield.append('  - \'' + lore + "\'\n");
+                    }
                 }
             }
+        }
+
+        outfield.append("\n")
+        outfield.append("Unbreakable: " + unbreakable + "\n");
+        let _durDmg_ = getInput("durdamage");
+        if(!unbreakable && _durDmg_ !== "0"){
+            outfield.append("ItemDurabilityDamage: " + _durDmg_ + "\n");
         }
 
 
@@ -1578,25 +1648,25 @@
         }
     }
 
-    function applyLocale(localeStr)
+    function applyLocale(locale)
     {
-        console.log('Locale Applied: ' + localeStr)
+        console.log('Locale Applied: ' + locale)
+        localeStr = locale;
         loadLocales();
-        let tar = document.getElementById("locale_" + localeStr)
-        console.log(tar.getAttributeNames());
-
 
         const $lang = document.querySelectorAll("[data-lang]")
         $lang.forEach(el => {
             const code = el.dataset.lang
             el.innerHTML = locales[localeStr][code]
         })
+        refreshOut()
     }
 
 
     function durSlider()
     {
         document.getElementById('input_durdamage').value = document.getElementById('slider_durdamage').value
+        refreshOut()
     }
 
 
