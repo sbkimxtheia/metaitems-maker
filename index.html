@@ -1227,7 +1227,8 @@
                     </small>
                 </label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="input_display" oninput="refreshOut()" placeholder="§e[RARE] §fMagic Sword">
+                    <input type="text" class="form-control" id="input_display" oninput="refreshOut()"
+                           placeholder="§e[RARE] §fMagic Sword">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" data-lang="btn_addcolorsymbol"
                                 onclick="addColorSymbol('input_display')">
@@ -1328,6 +1329,34 @@
             </div>
 
 
+            <!-- Combat -->
+            <div>
+                <label for="input_durdamage">
+                        <span class="prop-name" data-lang="prop_combat">
+                        Durability
+                        </span>
+                    <small class="prop-desc" data-lang="desc_combat">
+                        Durability Damage
+                    </small>
+                </label>
+                <div>
+                    <div class="input-group-sm">
+                        <label data-lang="prop_combat_dmg" for="input_combat_dmg">DMG</label>
+                        <input id="input_combat_dmg" type="text" class="form-control" placeholder="피해량" aria-label="">
+                    </div>
+                    <div class="input-group-sm">
+                        <label data-lang="prop_combat_crit_prob">@</label>
+                        <input id="input_combat_crit_prob" type="text" class="form-control" placeholder="치명타 확률" aria-label="Server">
+                    </div>
+                    <div class="input-group-sm">
+                        <label data-lang="prop_combat_crit_dmg">@</label>
+                        <input id="input_combat_crit_dmg" type="text" class="form-control" placeholder="치명타 추가 피해량" aria-label="Server">
+                    </div>
+
+
+                </div>
+
+            </div>
 
 
         </form>
@@ -1416,8 +1445,6 @@
 </div>
 <script>
     //region locales
-    let localeStr = "EN";
-
     const locales = {
         KO: {
             locale_str: "KO",
@@ -1453,6 +1480,12 @@
             optn_unbreakable_true: "True :: 아이템이 내구도를 가지지 않습니다.",
             optn_unbreakable_false: "False :: 아이템이 내구도를 가지며, 사용 시 소모됩니다.",
             synt_unbreakable: "아이템이 부서지지 않음으로 설정된 경우, 초기 내구도 감소 옵션은 무시됩니다.",
+
+            prop_combat: "전투",
+            desc_combat: "공격력, 치명타와 같은 능력치를 설정합니다.",
+            prop_combat_dmg: "피해량",
+            prop_combat_crit_prob: "치명타 추가 피해량",
+            prop_combat_crit_dmg: "치명타 확률",
 
             outprefix_1: "이 프리셋 파일은 MetaItems-Maker에 의해 간편하게 생성되었습니다.",
             outprefix_2: "이 프리셋 파일은 MetaItems 플러그인을 위한 아이템 프리셋입니다.",
@@ -1493,6 +1526,12 @@
             optn_unbreakable_false: "False :: When using items, it consumes durability.",
             synt_unbreakable: "If item is 'Unbreakable', Property 'Initial Durability Damage' will be ignored.",
 
+            prop_combat: "전투",
+            desc_combat: "공격력, 치명타와 같은 능력치를 설정합니다.",
+            prop_combat_dmg: "피해량",
+            prop_combat_crit_prob: "치명타 추가 피해량",
+            prop_combat_crit_dmg: "치명타 확률",
+
             outprefix_1: "This preset is made with MetaItems-Maker",
             outprefix_2: "This preset is available in the MetaItems plugin",
         }
@@ -1501,8 +1540,8 @@
     //endregion
 
     //const properties = ['codename', 'material', 'display', 'lore']
-
-    localeStr = getLang();
+    let localeStr = "KO";
+    //localeStr = getLang();
     loadLocales()
     applyLocale(localeStr)
     refreshOut()
@@ -1530,15 +1569,15 @@
 
         outfield.innerText = ''
         outfield.append('# ' + locales[localeStr]['outprefix_1'] + '\n' +
-            '# GitHub: https://github.com/sbkimxtheia/metaitems-maker\n' +
+            '# https://github.com/sbkimxtheia/metaitems-maker\n' +
             '# ' + locales[localeStr]['outprefix_2'] + '\n' +
-            '# GitHub: https://github.com/sbkimxtheia/metaitems\n\n' +
+            '# https://github.com/sbkimxtheia/metaitems\n\n' +
             'CodeName: \'' + getInput('codename') + "\'\n" +
             'Material: \'' + getInput('material') + "\'\n" +
             'DisplayName: \'' + getInput('display') + "\'\n");
 
         let loreIn = getInput('lore');
-        if(loreIn != null){
+        if (loreIn != null) {
 
             if (!/^ *$/.test(loreIn)) {
 
@@ -1549,13 +1588,13 @@
                 if (lores != null && lores.length > 0) {
                     for (var i = 0; i < lores.length; i++) {
                         let _lore_ = lores[i];
-                        if(_lore_){
+                        if (_lore_) {
                             _lores_.push(_lore_);
                         }
                     }
                 }
 
-                if(_lores_.length > 0){
+                if (_lores_.length > 0) {
                     outfield.append('Lores:\n');
                     for (let lore of _lores_) {
                         outfield.append('  - \'' + lore + "\'\n");
@@ -1567,7 +1606,7 @@
         outfield.append("\n")
         outfield.append("Unbreakable: " + unbreakable + "\n");
         let _durDmg_ = getInput("durdamage");
-        if(!unbreakable && _durDmg_ !== "0"){
+        if (!unbreakable && _durDmg_ !== "0") {
             outfield.append("ItemDurabilityDamage: " + _durDmg_ + "\n");
         }
 
