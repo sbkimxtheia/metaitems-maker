@@ -34,6 +34,14 @@
             margin-left: 8px;
         }
 
+        div.prop-block {
+            margin-bottom: 50px;
+        }
+
+        small.prop-synt {
+            color: #6c757d;
+        }
+
     </style>
 
 </head>
@@ -82,7 +90,7 @@
         <form>
 
             <!-- CodeName -->
-            <div class="form-group" style="margin-top: 30px; margin-bottom: 55px">
+            <div class="form-group prop-block">
                 <label for="input_codename">
                         <span class="prop-name" data-lang="prop_codename">
                             Codename
@@ -132,7 +140,7 @@
             </div>
 
             <!-- Material -->
-            <div class="form-group" style="margin-bottom: 55px">
+            <div class="form-group prop-block">
                 <label for="input_material">
                     <span class="prop-name" data-lang="prop_material">
                         Material
@@ -1229,7 +1237,7 @@
             </div>
 
             <!-- Display -->
-            <div class="form-group" style="margin-bottom: 55px">
+            <div class="form-group prop-block">
                 <label for="input_display">
                     <span class="prop-name" data-lang="prop_display">
                         Display
@@ -1239,10 +1247,12 @@
                     </small>
                 </label>
                 <div class="input-group">
-                    <input class="form-control" id="input_display" oninput="refreshOut()" placeholder="§e[RARE] §fMagic Sword"
+                    <input class="form-control" id="input_display" oninput="refreshOut()"
+                           placeholder="§e[RARE] §fMagic Sword"
                            type="text">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" data-lang="btn_addcolorsymbol" onclick="addColorSymbol('input_display')"
+                        <button class="btn btn-secondary" data-lang="btn_addcolorsymbol"
+                                onclick="addColorSymbol('input_display')"
                                 type="button">
                             Button
                         </button>
@@ -1257,7 +1267,7 @@
 
 
             <!-- Lore -->
-            <div class="form-group" style="margin-bottom: 55px">
+            <div class="form-group prop-block">
                 <label for="input_lore">
                     <span class="prop-name" data-lang="prop_lore">
                         Lore
@@ -1280,16 +1290,17 @@
 
 
             <!-- Unbreakable -->
-            <div class="form-group" style="margin-bottom: 30px">
+            <div class="form-group prop-block">
                 <label for="input_durdamage">
                     <span class="prop-name" data-lang="prop_unbreakable">Durability</span>
                     <small class="prop-desc" data-lang="desc_unbreakable">Durability Damage </small>
                 </label>
                 <div class="row-cols-1 btn-group-toggle" oninput="refreshOut()">
+
                     <input checked class="btn-check "
                            id="input_unbreakable" name="radio_unbreakable" type="radio"
                            value="true">
-                    <label class="btn btn-outline-primary" data-lang="optn_unbreakable_true" for="input_unbreakable">
+                    <label class="btn btn-outline-light" data-lang="optn_unbreakable_true" for="input_unbreakable">
 
                         Unbreakable True
 
@@ -1297,7 +1308,7 @@
                     <br>
                     <input class="btn btn-block btn-check " id="unbreakable_false"
                            name="radio_unbreakable" type="radio" value="false">
-                    <label class="btn btn-outline-primary" data-lang="optn_unbreakable_false" for="unbreakable_false">Unbreakable
+                    <label class="btn btn-outline-light" data-lang="optn_unbreakable_false" for="unbreakable_false">Unbreakable
                         False</label>
                 </div>
                 <div id="synt_unbreakable" style="margin-top: 5px">
@@ -1310,7 +1321,7 @@
 
 
             <!-- Durability -->
-            <div class="form-group" id="durdamageDiv" style="margin-bottom: 40px">
+            <div class="form-group prop-block" id="durdamageDiv">
                 <label for="input_durdamage">
                         <span class="prop-name" data-lang="prop_durdamage">
                         Durability
@@ -1321,7 +1332,8 @@
                 </label>
                 <div class="form-row">
                     <div class="form-group input-group col-10" style="align-content: center">
-                        <input class="form-range" id="slider_durdamage" max="2031" min="0" onchange="durSlider()" oninput="durSlider()"
+                        <input class="form-range" id="slider_durdamage" max="2031" min="0" onchange="durSlider()"
+                               oninput="durSlider()"
                                step="1"
                                type="range" value="0">
                         <label for="slider_durdamage">
@@ -1331,7 +1343,9 @@
                         </label>
                     </div>
                     <div class="form-group col-2">
-                        <input class="form-control" id="input_durdamage" oninput="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value; refreshOut();})()" style="margin-top: 7px;"
+                        <input class="form-control" id="input_durdamage"
+                               oninput="(function (){document.getElementById('slider_durdamage').value = document.getElementById('input_durdamage').value; refreshOut();})()"
+                               style="margin-top: 7px;"
                                type="number"
                                value="0">
                     </div>
@@ -1342,33 +1356,97 @@
 
 
             <!-- Combat -->
-            <div>
-                <label for="input_durdamage">
-                        <span class="prop-name" data-lang="prop_combat">
-                        Durability
-                        </span>
-                    <small class="prop-desc" data-lang="desc_combat">
-                        Durability Damage
-                    </small>
-                </label>
+            <div class="prop-block" oninput="refreshOut()">
                 <div>
-                    <div class="input-group-sm">
-                        <label data-lang="prop_combat_dmg" for="input_combat_dmg">DMG</label>
-                        <input aria-label="" class="form-control" id="input_combat_dmg" placeholder="피해량" type="text">
-                    </div>
-                    <div class="input-group-sm">
-                        <label data-lang="prop_combat_crit_prob">@</label>
-                        <input aria-label="Server" class="form-control" id="input_combat_crit_prob" placeholder="치명타 확률"
-                               type="text">
-                    </div>
-                    <div class="input-group-sm">
-                        <label data-lang="prop_combat_crit_dmg">@</label>
-                        <input aria-label="Server" class="form-control" id="input_combat_crit_dmg" placeholder="치명타 추가 피해량"
-                               type="text">
-                    </div>
+                    <label class="">
+                        <span class="prop-name" data-lang="prop_combat">
+                        Combat
+                        </span>
+                        <small class="prop-desc" data-lang="desc_combat">
+                            Combat Description
+                        </small>
 
+                    </label>
+                    <label id="combatPredicateDiv">
+                        <small>&nbsp;</small>
+                        <small data-lang="prop_combat_predicate"> </small>
+                        <small id="combat_predicate"> N/A </small>
+                    </label>
+                </div>
+
+
+
+                <div class="row-cols-1 btn-group-toggle" oninput="refreshOut()">
+
+                    <input checked class="btn-check" id="switch_combat_false"
+                           name="radio_combat" type="radio"
+                           value="false">
+                    <label class="btn btn-outline-light" data-lang="prop_combat_false" for="switch_combat_false">
+                        Combat False
+                    </label>
+
+                    <input class="btn-check" id="switch_combat_true"
+                           name="radio_combat" type="radio"
+                           value="true">
+                    <label class="btn btn-outline-light" data-lang="prop_combat_true" for="switch_combat_true">
+                        Combat True
+                    </label>
 
                 </div>
+
+                <div class="form-row small" id="combatInputDiv" style="margin-top: 15px" oninput="critSlider()">
+
+                    <!-- Basic Damage -->
+                    <div class="col-md-2 mb-4">
+                        <label data-lang="prop_combat_dmg" for="input_combat_dmg">DMG</label>
+                        <input class="form-control" id="input_combat_dmg"
+                               placeholder="7.5" required type="number">
+                    </div>
+
+                    <div class="col-md-1"></div>
+
+                    <!-- Critical Prob -->
+                    <div class="col-md-6 mb-4">
+                        <label data-lang="prop_combat_crit_prob" for="input_crit_prob_slider">Crit Prob</label>
+
+                        <div class="row">
+                            <div class="input-group" style="align-items: center;">
+                                <input class="form-range" id="input_crit_prob_slider" max="100" min="0"
+
+                                       step="1"
+                                       type="range" value="25">
+                            </div>
+                            <div>
+                                <label id="input_crit_prob" type="input"></label>
+                            </div>
+
+                            <!--
+                            <div class="input-group col-4">
+                                <input type="number" class="form-control" id="validationDefaultUsername" placeholder="15.5" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                            -->
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- Critical Additional Damage -->
+                    <div class="col-md-3 mb-4">
+                        <label data-lang="prop_combat_crit_dmg" for="input_combat_crit_dmg">Crit DMG</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+</span>
+                            </div>
+                            <input class="form-control" id="input_combat_crit_dmg" placeholder="4.5" required
+                                   type="number">
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -1477,7 +1555,7 @@
             desc_display: "플레이어에게 표시되는 아이템의 이름",
             syntax_display: "색상 기호 '§'를 사용할 수 있습니다.    ex) §f = 흰색, §e = 밝은 노랑",
 
-            prop_material: "메테리얼",
+            prop_material: "머티리얼",
             desc_material: "'다이아몬드 검', '철 곡괭이'와 같은 아이템의 영문 엔트리",
             syntax_material: "특수한 데이터가 필요한 경우, 출력되는 파일을 직접 수정해 주세요.",
 
@@ -1491,15 +1569,23 @@
 
             prop_unbreakable: "부서지지 않음",
             desc_unbreakable: "아이템에 \"부서지지 않음\" 옵션을 추가합니다. 내구도가 소모되지 않게 됩니다.",
-            optn_unbreakable_true: "True :: 아이템이 내구도를 가지지 않습니다.",
-            optn_unbreakable_false: "False :: 아이템이 내구도를 가지며, 사용 시 소모됩니다.",
+            optn_unbreakable_true: "True :: 아이템이 \"부서지지 않음\" 옵션과 함께 내구도를 가지지 않습니다.",
+            optn_unbreakable_false: "False :: 아이템이 내구도를 가지며, 사용 시 내구도가 소모됩니다.",
             synt_unbreakable: "아이템이 부서지지 않음으로 설정된 경우, 초기 내구도 감소 옵션은 무시됩니다.",
 
             prop_combat: "전투",
             desc_combat: "공격력, 치명타와 같은 능력치를 설정합니다.",
-            prop_combat_dmg: "피해량",
-            prop_combat_crit_prob: "치명타 추가 피해량",
-            prop_combat_crit_dmg: "치명타 확률",
+            prop_combat_true: "아이템이 별도의 타격, 치명타 능력치를 가질 수 있습니다.",
+            prop_combat_false: "아이템으로 피해를 입힐 수 없습니다.",
+            prop_combat_dmg: "기본 공격 피해량",
+            prop_combat_crit_prob: "치명타 발생 확률",
+            prop_combat_crit_dmg: "치명타 추가 피해량",
+            prop_combat_crit_prob_0: "치명타가 절대 발생하지 않습니다.",
+            prop_combat_crit_prob_1: "항상 치명타 추가 피해량이 적용됩니다.",
+            prop_combat_crit_prob_n: "{0} 확률로 {1} 가합니다.",
+            pro_combat_dmgna : "치명타를",
+            prop_combat_dmgqty: "의 피해를",
+            prop_combat_predicate: "예상 평균 피해량: ",
 
             outprefix_1: "이 프리셋 파일은 MetaItems-Maker에 의해 간편하게 생성되었습니다.",
             outprefix_2: "이 프리셋 파일은 MetaItems 플러그인을 위한 아이템 프리셋입니다.",
@@ -1540,11 +1626,19 @@
             optn_unbreakable_false: "False :: When using items, it consumes durability.",
             synt_unbreakable: "If item is 'Unbreakable', Property 'Initial Durability Damage' will be ignored.",
 
-            prop_combat: "전투",
-            desc_combat: "공격력, 치명타와 같은 능력치를 설정합니다.",
-            prop_combat_dmg: "피해량",
-            prop_combat_crit_prob: "치명타 추가 피해량",
-            prop_combat_crit_dmg: "치명타 확률",
+            prop_combat: "Combat",
+            desc_combat: "Wield Damage, Critical Probability, Critical Damage(Additional)",
+            prop_combat_true: "Item do have combat stats.",
+            prop_combat_false: "Item does not have combat stats.",
+            prop_combat_dmg: "Wield",
+            prop_combat_crit_prob: "Crit Prob",
+            prop_combat_crit_dmg: "Crit Dmg",
+            prop_combat_crit_prob_0: "No Critical Chance.",
+            prop_combat_crit_prob_1: "Always Critical Hit.",
+            prop_combat_crit_prob_n: "Deals {1} with a {0} chance.",
+            pro_combat_dmgna : "Critical",
+            prop_combat_dmgqty: "Damage",
+            prop_combat_predicate: "Average Damage Predicate: ",
 
             outprefix_1: "This preset is made with MetaItems-Maker",
             outprefix_2: "This preset is available in the MetaItems plugin",
@@ -1580,6 +1674,9 @@
         let unbreakable = document.querySelector('input[name="radio_unbreakable"]:checked').value === "true";
         document.getElementById('durdamageDiv').hidden = unbreakable;
         document.getElementById('synt_unbreakable').hidden = !unbreakable;
+        let combat = document.querySelector('input[name="radio_combat"]:checked').value === "true";
+        document.getElementById('combatInputDiv').hidden = !combat;
+        document.getElementById('combatPredicateDiv').hidden = !combat;
 
         outfield.innerText = ''
         outfield.append('# ' + locales[localeStr]['outprefix_1'] + '\n' +
@@ -1602,9 +1699,7 @@
                 if (lores != null && lores.length > 0) {
                     for (var i = 0; i < lores.length; i++) {
                         let _lore_ = lores[i];
-                        if (_lore_) {
-                            _lores_.push(_lore_);
-                        }
+                        _lores_.push(_lore_);
                     }
                 }
 
@@ -1624,18 +1719,19 @@
             outfield.append("ItemDurabilityDamage: " + _durDmg_ + "\n");
         }
 
+        if(combat){
+            outfield.append("\n");
+            let dmg = getInput("combat_dmg") !== "" ? getInput("combat_dmg") : 0;
+            let critDmg = getInput("combat_crit_dmg") !== "" ? getInput("combat_crit_dmg") : 0;
+            let critProb = getInput("crit_prob_slider");
+            outfield.append("WieldDamageBase: " + dmg + "\n")
+            outfield.append("WieldProbCrit: " + (0.01 * critProb).toString().substring(0, 4) + "\n");
+            outfield.append("WieldDamageCrit: " + critDmg);
+        }
+        else{
+            outfield.append("\nWieldDamageBase: -1");
+        }
 
-        // var props = getParent().rows;
-        // for (var rowI = 0; rowI < props.length; rowI++) {
-        //
-        //     let prop = props[rowI];
-        //     let no = prop.cells.item(0).innerText;
-        //     let key = prop.cells.item(1).innerText;
-        //     let val = prop.cells.item(2).innerText;
-        //
-        //     let was = outfield.innerText;
-        //     outfield.append('\n# ' + no + '\n' + key + ': ' + val + '\n')
-        // }
 
         function getInput(entry)
         {
@@ -1720,6 +1816,30 @@
     {
         document.getElementById('input_durdamage').value = document.getElementById('slider_durdamage').value
         refreshOut()
+    }
+
+    function critSlider()
+    {
+        let label = document.getElementById('input_crit_prob');
+        let value = parseFloat(document.getElementById('input_crit_prob_slider').value);
+        let dmgStr = document.getElementById('input_combat_dmg').value;
+        let dmg = parseFloat(dmgStr);
+        let critDmgStr = document.getElementById('input_combat_crit_dmg').value;
+        let critDmg = parseFloat(critDmgStr);
+        let valStr = value.toString();
+        let result = valStr === '0'
+            ? locales[localeStr]['prop_combat_crit_prob_0']
+            : valStr === '100'
+                ? locales[localeStr]['prop_combat_crit_prob_1']
+                : (locales[localeStr]['prop_combat_crit_prob_n'])
+                    .replace('{0}', valStr + '%')
+                    .replace('{1}',
+                        (!isNaN(dmg) && !isNaN(critDmg))
+                            ? (dmg + critDmg).toString() + locales[localeStr]['prop_combat_dmgqty']
+                            : locales[localeStr]['pro_combat_dmgna']);
+        label.innerText = result;
+
+        document.getElementById('combat_predicate').innerText = (dmg + critDmg * 0.01 * value).toString().substring(0,5);
     }
 
 
